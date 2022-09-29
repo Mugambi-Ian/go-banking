@@ -1,7 +1,7 @@
 package main
 
-import "mugambi-ian/go-banking/app"
+import "mugambi-ian/go-banking/handlers"
 
 func main() {
-	app.Start()
+	handlers.Start()
 }

@@ -1,4 +1,4 @@
-package app
+package handlers
 
 import (
 	"log"
@@ -16,6 +16,7 @@ func Start() {
 	customerHandler := CustomerHandler{service: customerService}
 
 	router.HandleFunc("/customers", customerHandler.getAllCustomers).Methods(http.MethodGet)
+	router.HandleFunc("/customer/{customer_id:[0-9]+}", customerHandler.getCustomer).Methods(http.MethodGet)
 
 	log.Fatal(http.ListenAndServe("localhost:8000", router))
 }

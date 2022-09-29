@@ -1,5 +1,7 @@
 package domain
 
+import "mugambi-ian/go-banking/errs"
+
 type Customer struct {
 	Id          string `json:"customer_id" xml:"CustomerId"`
 	Name        string `json:"customer_name" xml:"CustomerName"`
@@ -10,5 +12,6 @@ type Customer struct {
 }
 
 type CustomerRepository interface {
-	FindAll() ([]Customer, error)
+	FindAll(string) ([]Customer, *errs.AppError)
+	ByID(string) (*Customer, *errs.AppError)
 }
