@@ -3,12 +3,11 @@ package handlers
 import (
 	"encoding/json"
 	"encoding/xml"
-	"mugambi-ian/go-banking/domain"
+	"github.com/gorilla/mux"
+	"mugambi-ian/go-banking/dto"
 	"mugambi-ian/go-banking/errs"
 	"mugambi-ian/go-banking/service"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 type CustomerHandler struct {
@@ -18,7 +17,7 @@ type CustomerHandler struct {
 func (customerHandler *CustomerHandler) getAllCustomers(res http.ResponseWriter, req *http.Request) {
 	queryParams := req.URL.Query()
 	status := queryParams.Get("status")
-	customers := make([]domain.Customer, 0)
+	customers := make([]dto.CustomerResponse, 0)
 	err := errs.NewUnexpectedError("A Error Occurred")
 	if status != "" {
 		switch status {
