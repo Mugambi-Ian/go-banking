@@ -6,8 +6,6 @@ import (
 	"github.com/jmoiron/sqlx"
 	"mugambi-ian/go-banking/errs"
 	"mugambi-ian/go-banking/logger"
-	"os"
-	"time"
 )
 
 type CustomerRepositoryDB struct {
@@ -49,23 +47,6 @@ func (s CustomerRepositoryDB) ByID(id string) (*Customer, *errs.AppError) {
 	return &c, nil
 }
 
-func NewCustomerRepositoryDB() CustomerRepositoryDB {
-	dbUser := os.Getenv("DB_USER")
-	dbName := os.Getenv("DB_NAME")
-	dbPort := os.Getenv("DB_PORT")
-	dbAddress := os.Getenv("DB_ADDRESS")
-	dbPassword := os.Getenv("DB_PASSWORD")
-
-	if dbPassword != "" {
-		dbUser += ":" + dbPassword
-	}
-
-	client, err := sqlx.Open("mysql", dbUser+"@tcp("+dbAddress+":"+dbPort+")/"+dbName)
-	if err != nil {
-		panic(err)
-	}
-	client.SetConnMaxLifetime(time.Minute * 3)
-	client.SetMaxOpenConns(10)
-	client.SetMaxIdleConns(10)
-	return CustomerRepositoryDB{client: client}
+func NewCustomerRepositoryDB(dbClient *sqlx.DB) CustomerRepositoryDB {
+	return CustomerRepositoryDB{client: dbClient}
 }

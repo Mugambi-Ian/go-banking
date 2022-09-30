@@ -13,6 +13,18 @@ func NewNotFoundError(message string) *AppError {
 		Code:    http.StatusNotFound,
 	}
 }
+func NewBadRequestError(message string) *AppError {
+	return &AppError{
+		Message: message,
+		Code:    http.StatusBadRequest,
+	}
+}
+func NewValidationError(message string) *AppError {
+	return &AppError{
+		Message: message,
+		Code:    http.StatusUnprocessableEntity,
+	}
+}
 func NewUnexpectedError(message string) *AppError {
 	return &AppError{
 		Message: message,
